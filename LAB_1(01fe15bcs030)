@@ -1,0 +1,40 @@
+import tensorflow as tf
+with tf.name_scope("variance") :
+    with tf.name_scope("mean_A") :
+            A_array=tf.constant([35.4,1.354,78.245,15.65,112.65,15.542],shape=[1,6],name='A_array')
+            B_array=tf.constant([65.21,36.456,6.214,23.645,4.004,4.256],shape=[1,6],name='B_array')
+            A_mean=tf.reduce_mean(A_array)
+            sess=tf.Session()
+            print(sess.run(A_mean))
+    with tf.name_scope("mean_B"):
+           B_mean=tf.reduce_mean(B_array)
+           sess=tf.Session()
+           print(sess.run(B_mean))
+   
+ 
+    d=tf.subtract(A_array,A_mean)
+    sess=tf.Session()
+    print(sess.run(d))
+   
+    e=tf.square(d)
+    variance=tf.reduce_sum(e)
+    sess=tf.Session()
+    print(sess.run(variance))
+   
+     with tf.name_scope("co-variance"):
+        g=tf.subtract(B_array,B_mean)
+        sess=tf.Session()
+        g=tf.multiply(d,g)
+        cov=tf.reduce_sum(g)
+        print(sess.run(cov))
+
+with tf.name_scope("value_of_c"):
+        c=tf.divide(cov,variance)
+        print(sess.run(c))
+with tf.name_scope("value_m"):
+        i=tf.multiply(c,A_mean)
+        k=tf.subtract(B_mean,i)
+        print(sess.run(k))
+with tf.Session() as sess:
+        writer = tf.summary.FileWriter("/tmp/tboard/output4", sess.graph)
+        writer.close()
