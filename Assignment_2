@@ -1,0 +1,22 @@
+import tensorflow as tf
+with tf.name_scope("a"):
+    a=tf.multiply(5,2)
+with tf.name_scope("b"):
+    b=tf.multiply(6,3)
+with tf.name_scope("c"):
+    c=tf.multiply(a,a)
+with tf.name_scope("d"):
+    d=tf.multiply(b,b)
+with tf.name_scope("e"):
+    e=tf.multiply(a,b)
+with tf.name_scope("f"):
+    f=tf.multiply(2,e)
+with tf.name_scope("g"):
+    g=tf.add(c,d)
+with tf.name_scope("h"):
+    h=tf.add(g,f)
+
+with tf.Session() as sess:
+    writer = tf.summary.FileWriter("/tmp/tboard/output", sess.graph)
+    print(sess.run(h))
+    writer.close()
